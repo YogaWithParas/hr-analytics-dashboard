@@ -1,0 +1,148 @@
+{
+  "project_overview": {
+    "name": "HR Analytics Dashboard - FP&A-Aligned HRIS Insights",
+    "objective": "Build modular, LLM-collaborative HR analytics dashboard using IBM Employee Attrition dataset",
+    "architecture": "Modular design with ID-tagged sections for precise LLM editing",
+    "target_industries": ["Finance", "Operations", "Retail", "Healthcare"]
+  },
+  "file_mappings": {
+    "src/config/schema.py": {
+      "purpose": "Employee record schema definition and data validation",
+      "id_tags": [
+        "SCHEMA-EMPLOYEE-RECORD",
+        "SCHEMA-VALIDATION", 
+        "SCHEMA-MAPPING"
+      ],
+      "dependencies": ["pandas", "dataclasses"],
+      "cross_references": ["data_cleaning.py", "kpi_calculations.py"]
+    },
+    "src/modules/data_cleaning.py": {
+      "purpose": "Data preprocessing, feature engineering, and validation pipeline",
+      "id_tags": [
+        "CLEANING-EMPLOYEE-ATTRITION",
+        "CLEANING-LOGGING",
+        "CLEANING-LOAD-DATA",
+        "CLEANING-BASIC-CLEANUP",
+        "CLEANING-FEATURE-ENGINEERING",
+        "CLEANING-OUTLIER-DETECTION",
+        "CLEANING-VALIDATION",
+        "CLEANING-MAIN-PIPELINE",
+        "CLEANING-EXPORT"
+      ],
+      "dependencies": ["schema.py"],
+      "outputs": ["cleaned_dataframe", "cleaning_stats"]
+    },
+    "src/modules/kpi_calculations.py": {
+      "purpose": "FP&A-aligned KPI calculations and statistical analysis",
+      "id_tags": [
+        "KPI-ATTRITION-MODELING",
+        "KPI-LOGGING",
+        "KPI-ATTRITION-RATE",
+        "KPI-SALARY-ANALYSIS",
+        "KPI-WORKLIFE-BALANCE",
+        "KPI-PERFORMANCE-SATISFACTION",
+        "KPI-TENURE-ANALYSIS",
+        "KPI-COMPREHENSIVE-ANALYSIS",
+        "KPI-FINANCIAL-METRICS",
+        "KPI-RISK-INDICATORS",
+        "KPI-STATISTICAL-TESTS"
+      ],
+      "dependencies": ["schema.py", "data_cleaning.py"],
+      "outputs": ["comprehensive_kpis", "statistical_tests"]
+    },
+    "src/modules/visual_helpers.py": {
+      "purpose": "Chart creation and visualization functions for dashboard",
+      "id_tags": [
+        "VISUAL-HELPERS",
+        "VISUAL-LOGGING",
+        "VISUAL-ATTRITION-CHARTS",
+        "VISUAL-SALARY-CHARTS",
+        "VISUAL-WORKLIFE-CHARTS",
+        "VISUAL-TENURE-CHARTS",
+        "VISUAL-KPI-CARDS",
+        "VISUAL-COMPREHENSIVE-DASHBOARD",
+        "VISUAL-EXPORT-FUNCTIONS"
+      ],
+      "dependencies": ["plotly", "kpi_calculations.py"],
+      "outputs": ["dashboard_charts", "kpi_cards"]
+    },
+    "dashboard/streamlit_app.py": {
+      "purpose": "Main Streamlit dashboard with interactive filters and visualizations",
+      "id_tags": [
+        "DASHBOARD-UI-MAIN",
+        "DASHBOARD-CONFIG",
+        "DASHBOARD-SIDEBAR",
+        "DASHBOARD-DATA-LOADING",
+        "DASHBOARD-FILTERING",
+        "DASHBOARD-KPI-CARDS",
+        "DASHBOARD-CHARTS",
+        "DASHBOARD-EXPORT",
+        "DASHBOARD-MAIN"
+      ],
+      "dependencies": ["streamlit", "visual_helpers.py", "kpi_calculations.py"],
+      "outputs": ["interactive_dashboard"]
+    }
+  },
+  "data_schema": {
+    "employee_record": {
+      "basic_info": ["employee_id", "age", "gender", "marital_status"],
+      "job_info": ["department", "job_role", "job_level", "years_at_company"],
+      "compensation": ["monthly_income", "hourly_rate", "daily_rate", "percent_salary_hike"],
+      "performance": ["performance_rating", "job_satisfaction", "work_life_balance"],
+      "target": ["attrition"]
+    },
+    "required_columns": [
+      "Age", "Gender", "MaritalStatus", "Department", "JobRole", "JobLevel",
+      "YearsAtCompany", "MonthlyIncome", "PerformanceRating", "JobSatisfaction",
+      "WorkLifeBalance", "Attrition"
+    ]
+  },
+  "kpi_mappings": {
+    "attrition_metrics": {
+      "overall_rate": "Company-wide attrition percentage",
+      "by_department": "Attrition rates segmented by department",
+      "by_job_role": "Attrition rates by job role",
+      "by_gender": "Gender-based attrition analysis"
+    },
+    "salary_metrics": {
+      "avg_salary_by_role": "Average monthly income by job role",
+      "salary_performance_correlation": "Correlation between salary and performance",
+      "dept_salary_stats": "Salary statistics by department"
+    },
+    "financial_metrics": {
+      "total_annual_payroll": "Total annual payroll cost",
+      "estimated_attrition_cost": "Cost of employee attrition",
+      "salary_efficiency": "Performance per dollar spent"
+    },
+    "risk_indicators": {
+      "high_risk_employees": "Employees with low satisfaction, high performance",
+      "flight_risk": "High performers with low tenure",
+      "burnout_risk": "Employees with overtime and poor work-life balance"
+    }
+  },
+  "llm_editing_rules": {
+    "id_tagging": "Every function must have unique ID comment for precise editing",
+    "schema_validation": "Cross-check with schema.py for data structure consistency",
+    "input_output_preservation": "Maintain function signatures when editing ID-tagged sections",
+    "cross_module_compatibility": "Ensure changes don't break dependencies between modules",
+    "documentation_updates": "Update relevant documentation for schema changes"
+  },
+  "industry_extensions": {
+    "finance": {
+      "additional_kpis": ["regulatory_compliance", "risk_adjusted_returns"],
+      "data_sources": ["banking_hr_data", "compliance_records"]
+    },
+    "operations": {
+      "additional_kpis": ["production_efficiency", "safety_metrics"],
+      "data_sources": ["manufacturing_hr_data", "safety_records"]
+    },
+    "retail": {
+      "additional_kpis": ["sales_performance", "customer_satisfaction"],
+      "data_sources": ["retail_hr_data", "sales_records"]
+    },
+    "healthcare": {
+      "additional_kpis": ["patient_outcomes", "clinical_efficiency"],
+      "data_sources": ["healthcare_hr_data", "patient_records"]
+    }
+  }
+} 
